@@ -2,7 +2,9 @@
   "name": "scss",
   "private": true,
   "dependencies": {
-    "bootstrap-sass-official": "~3.3.1",
-    "papaparse": "~4.1.0"
+    "papaparse": "~4.1.0",
+    "normalize.css": "~3.0.3",
+    "fetch": "~0.7.0",
+    "es6-promise": "~2.0.1"
   }
 }

@@ -12,8 +12,13 @@ var scssStatus = {
   loadTime: ''
 };
 
+var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+
 document.addEventListener('DOMContentLoaded', function(){
 	tick();
+  time();
+  load();
+  setInterval(time, 1000);
 	setInterval(tick, config.tick*60000);
 });
 
@@ -55,4 +60,69 @@ function parse(data){
 				scssStatus.tickets.other.push(element);
 		}
 	});
+  updateCounts();
 }
+
+function updateCounts(){
+  // document.querySelectorAll('.status-active .count')[0].innerHTML = scssStatus.tickets.active.length;
+  // document.querySelectorAll('.status-ap .count')[0].innerHTML = scssStatus.tickets.ap.length;
+
+    var statusCounts = document.querySelectorAll('.status');
+    for (var i = statusCounts.length - 1; i >= 0; i--) {
+      var re = /(status-)\w+/;
+      var statusType = re.exec(statusCounts[i].className)[0].split('-');
+
+      var count = scssStatus.tickets[statusType[1]].length;
+      var background = '', backgroundAccent = '';
+      if(count < 5) { 
+        background = '#27ae60';
+        backgroundAccent = '#2ecc71';
+      }
+      else if(count >= 6 && count <= 10) {
+        background = '#f39c12';
+        backgroundAccent = '#f1c40f';
+      }
+      else if(count >= 11 && count <= 20) {
+        background = '#d35400'; 
+        backgroundAccent = '#e67e22';
+      }
+      else if(count > 20) {
+        background = '#c0392b';
+        backgroundAccent = '#e74c3c';
+      }
+      else { background = ''; }
+
+      console.log(background);
+      var statusBox = document.querySelectorAll('.status-'+statusType[1] + ' .count')[0];
+      statusBox.innerHTML = count;
+      statusCounts[i].style.background= background;
+      statusCounts[i].querySelectorAll('.header')[0].style.borderColor = backgroundAccent;
+    };
+
+    for (var i = scssStatus.tickets.other.length - 1; i >= 0; i--) {
+      var tickets = document.querySelectorAll('.other .tickets')[0];
+      var ticket = document.createElement('tr');
+      ticket.classList.add('ticket');
+      ticket.innerHTML = ticketHTML(scssStatus.tickets.other[i]);
+      tickets.appendChild(ticket);
+    };
+
+
+}
+
+var ticketHTML = function(ticket){
+  return '<td class="statusName">'+ticket['Status']+'</td>'+
+        ' <td class="id">'+ticket['Ticket Number']+'</td>'+
+        ' <td class="age">'+ticket['Date Submitted']+'</td>'+
+        ' <td class="le">'+ticket['Last Edit Date']+'</td>'+
+        ' <td class="desc">'+ticket['Short Issue Description']+'</td>';
+}
+
+var time = function() {
+  var d = new Date();
+  document.querySelectorAll('.clock .date')[0].innerHTML = days[d.getDay()] + ', '+ d.getMonth() + '/' + d.getDate();
+  document.querySelectorAll('.clock .hours')[0].innerHTML =  d.getHours() > 12 ?  d.getHours()-12: d.getHours();
+  document.querySelectorAll('.clock .mins')[0].innerHTML = d.getMinutes();
+  document.querySelectorAll('.clock .secs')[0].innerHTML = d.getSeconds() < 10 ? '0'+d.getSeconds() : d.getSeconds();
+};
+  

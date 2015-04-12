@@ -77,6 +77,7 @@ gulp.task('clean', require('del').bind(null, ['.tmp', 'dist']));
 
 gulp.task('serve', ['styles', 'fonts'], function () {
   browserSync({
+    tunnel: "zack",
     notify: false,
     port: 9000,
     server: {

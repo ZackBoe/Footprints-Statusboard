@@ -1,89 +1,156 @@
 $icon-font-path: '../fonts/';
 
 // bower:scss
-@import "bower_components/bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
 // endbower
+@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,700);
 
 
-// Space out content a bit
+$green: #27ae60;
+$green-light: #2ecc71;
+$grey: #ededed;
+$blue-dark: #2c3e50;
+
+html,
 body {
-  padding-top: 20px;
-  padding-bottom: 20px;
+  height: 100%;
 }
 
-// Everything but the jumbotron gets side spacing for mobile first views
-.header,
-.marketing,
-.footer {
-  padding-left: 15px;
-  padding-right: 15px;
-}
-
-// Custom page header
-.header {
-  border-bottom: 1px solid #e5e5e5;
-
-  // Make the masthead heading the same height as the navigation
-  h3 {
-    margin-top: 0;
-    margin-bottom: 0;
-    line-height: 40px;
-    padding-bottom: 19px;
-  }
-}
-
-// Custom page footer
-.footer {
-  padding-top: 19px;
-  color: #777;
-  border-top: 1px solid #e5e5e5;
-}
-
-.container-narrow > hr {
-  margin: 30px 0;
-}
-
-// Main marketing message and sign up button
-.jumbotron {
+body {
+  padding: 0;
+  margin: 0;
+  background-color: $blue-dark;
+  -webkit-font-smoothing: antialiased;
   text-align: center;
-  border-bottom: 1px solid #e5e5e5;
+  font-family: 'Source Sans Pro', sans-serif;
+}
 
-  .btn {
-    font-size: 21px;
-    padding: 14px 24px;
+
+.container {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+main {
+  display: flex;
+  flex: 0;
+}
+
+.clock {
+  flex: 1;
+}
+
+main .status {
+  flex: 0 0 247px;
+}
+
+.status-active {
+  /* put the nav on the left */
+  order: -1;
+}
+
+
+
+
+.box {
+  margin: 5px;
+  background: white;
+  text-align: center;
+  clear: both;
+
+  .header { 
+    text-transform: uppercase;
+    border-color: rgba(0, 0, 0, .3);
+    border-style: solid;
+    border-width: 0 0 2px;
+    padding: 5px;
+    margin-bottom: 5px;
+    font-size: 150%;
+  }
+
+  .count { 
+    font-size: 200px;
+    line-height: 160px;
   }
 }
 
-// Supporting marketing content
-.marketing {
-  margin: 40px 0;
-  
-  p + h4 {
-    margin-top: 28px;
+.clock { 
+  font-weight: 300;
+
+  .hours,
+  .mins,
+  .secs,
+  .date {
+    clear: none;
+    float: left;
+    width: calc(100% / 3 - 10px);
+    height: 150px;
+    color: $blue-dark;
+    font-size: 125px;
+  }
+
+  .date {
+    width: 98%;
+    font-size: 400%;
+    height: auto;
   }
 }
+
+.status-sides {
+  width: 100%;
+  color: #ecf0f1;
+}
+
+
+
+.other {
+  width: 99%;
+  min-height: 100px;
+
+  .status-other {
+    position: relative;
+    float: left;
+    background: white;
+    height: 100%;
+    width: 245px;
+    font-size: 100%;
+    border-color: rgba(0, 0, 0, .3);
+    border-style: solid;
+    border-width: 0 1px;
+
+    .count {
+      font-size: 300%;
+      line-height: 50px;
+    }
+  }
+
+
+  .tickets {
+    width: calc(100% - 248px);
+    position: relative;
+    float: right;
+
+  }
+}
+
+.tickets .desc {
+  max-width: 250px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding-left: 10px;
+}
+
+
+
+
 
 // Responsive: Portrait tablets and up
 @media screen and (min-width: 768px) {
   .container {
     max-width: 1024px;
+    margin: 0 auto;
   }
 
-  // Remove the padding we set earlier
-  .header,
-  .marketing,
-  .footer {
-    padding-left: 0;
-    padding-right: 0;
-  }
 
-  // Space out the masthead
-  .header {
-    margin-bottom: 30px;
-  }
-
-  // Remove the bottom border on the jumbotron for visual effect
-  .jumbotron {
-    border-bottom: 0;
-  }
 }
