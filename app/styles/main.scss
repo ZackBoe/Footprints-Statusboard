@@ -19,6 +19,7 @@ body {
   padding: 0;
   margin: 0;
   background-color: $blue-dark;
+  color: white;
   -webkit-font-smoothing: antialiased;
   text-align: center;
   font-family: 'Source Sans Pro', sans-serif;
@@ -98,16 +99,15 @@ main .status {
 
 .status-sides {
   width: 100%;
-  color: #ecf0f1;
 }
 
 
 
-.other {
+.box-list {
   width: 99%;
   min-height: 100px;
 
-  .status-other {
+  .ticketList {
     position: relative;
     float: left;
     background: white;
@@ -129,7 +129,7 @@ main .status {
     width: calc(100% - 248px);
     position: relative;
     float: right;
-
+    color: black;
   }
 }
 

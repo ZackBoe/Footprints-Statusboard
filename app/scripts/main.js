@@ -8,7 +8,7 @@ var config = {
 };
 
 var scssStatus = {
-  tickets:{'ap':[],'active':[],'other':[]},
+  tickets:{'ap':[],'active':[],'other':[], 'response':[]},
   loadTime: ''
 };
 
@@ -35,7 +35,7 @@ function load(){
 	  })  
 	  .then(function(text) {
       scssStatus.loadTime = Date.now();
-	  	console.log('got it');
+	  	console.log('Updated Tickets');
 	  	parse(text);
 	  })  
 	  .catch(function(error) {
@@ -44,7 +44,7 @@ function load(){
 }
 
 function parse(data){
-	scssStatus.tickets={'ap':[],'active':[],'other':[]};
+	scssStatus.tickets={'ap':[],'active':[],'other':[], 'response':[]};
 	data = Papa.parse(data.trim(), {'header':true});
 	data.data.forEach(function(element){
 		switch(element.Status){
@@ -56,6 +56,10 @@ function parse(data){
 			case 'Pending':
 				scssStatus.tickets.active.push(element);
 				break;
+      case 'Response after Closed':
+      case 'User Response':
+        scssStatus.tickets.response.push(element);
+        break;
 			default:
 				scssStatus.tickets.other.push(element);
 		}
@@ -64,8 +68,36 @@ function parse(data){
 }
 
 function updateCounts(){
-  // document.querySelectorAll('.status-active .count')[0].innerHTML = scssStatus.tickets.active.length;
-  // document.querySelectorAll('.status-ap .count')[0].innerHTML = scssStatus.tickets.ap.length;
+
+
+    if (scssStatus.tickets.other.length > 0){
+      var otherTickets = document.createElement('div');
+      document.querySelectorAll('main')[0].insertAdjacentHTML('afterend', ticketListHTML('other'));
+
+      var tickets = document.querySelectorAll('.other .tickets')[0];
+      var ticket = document.createElement('tr');
+      for (var i = scssStatus.tickets.other.length - 1; i >= 0; i--) {
+        ticket.classList.add('ticket');
+        ticket.innerHTML = ticketHTML(scssStatus.tickets.other[i]);
+        tickets.appendChild(ticket);
+      };
+    }
+
+
+    if (scssStatus.tickets.response.length > 0){
+      var responseTickets = document.createElement('div');
+      document.querySelectorAll('main')[0].insertAdjacentHTML('afterend', ticketListHTML('response'));
+
+      var tickets = document.querySelectorAll('.response .tickets')[0];
+      var ticket = document.createElement('tr');
+      for (var i = scssStatus.tickets.response.length - 1; i >= 0; i--) {
+        ticket.classList.add('ticket');
+        ticket.innerHTML = ticketHTML(scssStatus.tickets.response[i]);
+        tickets.appendChild(ticket);
+      };
+    }
+
+
 
     var statusCounts = document.querySelectorAll('.status');
     for (var i = statusCounts.length - 1; i >= 0; i--) {
@@ -92,19 +124,10 @@ function updateCounts(){
       }
       else { background = ''; }
 
-      console.log(background);
       var statusBox = document.querySelectorAll('.status-'+statusType[1] + ' .count')[0];
       statusBox.innerHTML = count;
       statusCounts[i].style.background= background;
       statusCounts[i].querySelectorAll('.header')[0].style.borderColor = backgroundAccent;
-    };
-
-    for (var i = scssStatus.tickets.other.length - 1; i >= 0; i--) {
-      var tickets = document.querySelectorAll('.other .tickets')[0];
-      var ticket = document.createElement('tr');
-      ticket.classList.add('ticket');
-      ticket.innerHTML = ticketHTML(scssStatus.tickets.other[i]);
-      tickets.appendChild(ticket);
     };
 
 
@@ -116,6 +139,16 @@ var ticketHTML = function(ticket){
         ' <td class="age">'+ticket['Date Submitted']+'</td>'+
         ' <td class="le">'+ticket['Last Edit Date']+'</td>'+
         ' <td class="desc">'+ticket['Short Issue Description']+'</td>';
+}
+
+var ticketListHTML = function(type){
+  return '<div class="box box-list '+type+'">'+
+         '<div class="status ticketList status-'+type+'">'+
+         '<div class="header">'+type+' tickets</div>'+
+         '<span class="count">'+scssStatus.tickets[type].length+'</span></div>'+
+         '<table class="tickets"><tr class="ticket"><th class="statusName">Status</th>'+
+         '<th class="id">ID</th><th class="age">Submitted</th><th class="le">Last Edit</th>'+
+         '<th class="desc">Short Description</th></tr></table></div>';
 }
 
 var time = function() {
