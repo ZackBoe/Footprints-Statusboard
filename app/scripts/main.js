@@ -79,8 +79,8 @@ function updateCounts(){
       document.querySelectorAll('main')[0].insertAdjacentHTML('afterend', ticketListHTML('active'));
 
       var tickets = document.querySelectorAll('.active .tickets')[0];
-      var ticket = document.createElement('tr');
       for (var i = scssStatus.tickets.active.length - 1; i >= 0; i--) {
+      var ticket = document.createElement('tr');
         ticket.classList.add('ticket');
         ticket.innerHTML = ticketHTML(scssStatus.tickets.active[i]);
         tickets.appendChild(ticket);
@@ -92,8 +92,8 @@ function updateCounts(){
       document.querySelectorAll('main')[0].insertAdjacentHTML('afterend', ticketListHTML('other'));
 
       var tickets = document.querySelectorAll('.other .tickets')[0];
-      var ticket = document.createElement('tr');
       for (var i = scssStatus.tickets.other.length - 1; i >= 0; i--) {
+      var ticket = document.createElement('tr');
         ticket.classList.add('ticket');
         ticket.innerHTML = ticketHTML(scssStatus.tickets.other[i]);
         tickets.appendChild(ticket);
@@ -106,8 +106,8 @@ function updateCounts(){
       document.querySelectorAll('main')[0].insertAdjacentHTML('afterend', ticketListHTML('response'));
 
       var tickets = document.querySelectorAll('.response .tickets')[0];
-      var ticket = document.createElement('tr');
       for (var i = scssStatus.tickets.response.length - 1; i >= 0; i--) {
+      var ticket = document.createElement('tr');
         ticket.classList.add('ticket');
         ticket.innerHTML = ticketHTML(scssStatus.tickets.response[i]);
         tickets.appendChild(ticket);
