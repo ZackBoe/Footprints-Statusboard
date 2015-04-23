@@ -69,6 +69,18 @@ function parse(data){
 
 function updateCounts(){
 
+    if (scssStatus.tickets.active.length > 0){
+      var activeTickets = document.createElement('dev');
+      document.querySelectorAll('main')[0].insertAdjacentHTML('afterend', ticketListHTML('active'));
+
+      var tickets = document.querySelectorAll('.active .tickets')[0];
+      var ticket = document.createElement('tr');
+      for (var i = scssStatus.tickets.active.length - 1; i >= 0; i--) {
+        ticket.classList.add('ticket');
+        ticket.innerHTML = ticketHTML(scssStatus.tickets.active[i]);
+        tickets.appendChild(ticket);
+      };
+    }
 
     if (scssStatus.tickets.other.length > 0){
       var otherTickets = document.createElement('div');
@@ -96,6 +108,7 @@ function updateCounts(){
         tickets.appendChild(ticket);
       };
     }
+
 
 
 
