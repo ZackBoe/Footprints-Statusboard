@@ -4,7 +4,12 @@
 var config = {
 	'tick': 1, 	// interval between time checks (minutes)
 	'delay': 60, // delay to wait before loading (seconds)
-	'dataURI': 'scss.csv' // URL of data to pull in
+	'dataURI': 'scss.csv', // URL of data to pull in
+  'thresholds': { // thresholds to color count boxes
+    'low': 5,
+    'med': 10,
+    'high': 20,
+  }
 };
 
 var scssStatus = {
@@ -119,19 +124,19 @@ function updateCounts(){
 
       var count = scssStatus.tickets[statusType[1]].length;
       var background = '', backgroundAccent = '';
-      if(count < 5) { 
+      if(count < config.thresholds.low) { 
         background = '#27ae60';
         backgroundAccent = '#2ecc71';
       }
-      else if(count >= 6 && count <= 10) {
+      else if(count > config.thresholds.low && count <= config.thresholds.med) {
         background = '#f39c12';
         backgroundAccent = '#f1c40f';
       }
-      else if(count >= 11 && count <= 20) {
+      else if(count > config.thresholds.med && count <= config.thresholds.high) {
         background = '#d35400'; 
         backgroundAccent = '#e67e22';
       }
-      else if(count > 20) {
+      else if(count > config.thresholds.high) {
         background = '#c0392b';
         backgroundAccent = '#e74c3c';
       }
