@@ -124,7 +124,7 @@ function updateCounts(){
 
       var count = scssStatus.tickets[statusType[1]].length;
       var background = '', backgroundAccent = '';
-      if(count < config.thresholds.low) { 
+      if(count <= config.thresholds.low) { 
         background = '#27ae60';
         backgroundAccent = '#2ecc71';
       }
